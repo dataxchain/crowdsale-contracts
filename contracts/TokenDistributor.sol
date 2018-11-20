@@ -24,39 +24,14 @@ contract TokenDistributor is Ownable {
     token = _token;
   }
 
-  function initialDistributeToken(address[] _beneficiaries, uint256[] _amounts)
-   onlyOwner public {
-    require(isInitialDistributed == false);
-    require(_beneficiaries.length == _amounts.length);
-
-    for(uint i=0 ; i < _beneficiaries.length ; i++){
-      _deliverTokens(_beneficiaries[i], _amounts[i]);
-    }
-
-    isInitialDistributed = true;
-
-  }
-
   function transferToken(string _tx, address _beneficiary,
     uint256 _tokenAmount) onlyOwner public {
       require(distributedTx[_tx] == 0);
 
-      _deliverTokens(_beneficiary, _tokenAmount);
+      token.safeTransfer(_beneficiary, _tokenAmount);
 
       distributedTx[_tx] = _tokenAmount;
       emit LogTransferToken(_tx, _beneficiary, _tokenAmount);
-  }
-
-  function getDistribution(string _tx) public view returns (uint){
-    return distributedTx[_tx];
-  }
-
-  function isInTransaction(string _tx) public view returns (bool) {
-      return distributedTx[_tx] > 0;
-    }
-
-  function _deliverTokens(address _beneficiary, uint256 _tokenAmount) internal {
-    token.safeTransfer(_beneficiary, _tokenAmount);
   }
 
   function burnToken() onlyOwner public {

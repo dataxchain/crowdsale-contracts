@@ -32,44 +32,13 @@ contract('TokenDistributor', async (accounts) => {
     assert.equal(balance.valueOf(), createAmount * (10 ** 18));
   });
 
-  describe('test initialDistributeToken method', async() =>{
-    it("initial distribute token from notOwner", async() => {
-      await tryCatch(distributor.initialDistributeToken(
-        [memberAndAdvisorAddress, reserveAddress],
-        [memberAndAdvisorAmount, reserveTokenAmount],
-        {from:notOwner}), errTypes.revert);
-    });
-
-    it("initial distribute token from owner", async() => {
-      await distributor.initialDistributeToken(
-        [memberAndAdvisorAddress, reserveAddress],
-        [memberAndAdvisorAmount, reserveTokenAmount],
-        {from:owner});
-      let balance = await token.balanceOf.call(memberAndAdvisorAddress);
-      assert.equal(balance.valueOf(), memberAndAdvisorAmount);
-
-      balance = await token.balanceOf.call(reserveAddress);
-      assert.equal(balance.valueOf(), reserveTokenAmount);
-
-      balance = await token.balanceOf.call(distributor.address);
-      assert.equal(balance.valueOf(), saleAmount + bountyAndAirdropAmount);
-
-    });
-
-    it("initial distribute token not initial", async() => {
-      await tryCatch(distributor.initialDistributeToken(
-        [memberAndAdvisorAddress, reserveAddress],
-        [memberAndAdvisorAmount, reserveTokenAmount],
-         {from:owner}), errTypes.revert);
-    });
-  });
-
   describe('test transferToken method', async() =>{
     var hash = '0x1234';
     var amount = 25000;
 
     it("transfer token with hash from notOwner", async() => {
-      await tryCatch(distributor.transferToken(purchaser, hash, amount, {from:notOwner}), errTypes.revert);
+      await tryCatch(distributor.transferToken(
+          hash, purchaser, amount, {from:notOwner}), errTypes.revert);
     });
 
     it("transfer token with hash from Owner", async() => {
@@ -79,21 +48,9 @@ contract('TokenDistributor', async (accounts) => {
     });
 
     it("transfer token with hash twice", async() => {
-      await tryCatch(distributor.transferToken(hash, purchaser, amount, {from:owner}), errTypes.revert);
+      await tryCatch(distributor.transferToken(
+          hash, purchaser, amount, {from:owner}), errTypes.revert);
     });
-
-    it("check hash saved in contract", async() => {
-      let isInTransaction = await distributor.isInTransaction(hash);
-      assert.equal(isInTransaction, true);
-
-    });
-
-    it("check hash not saved in contract", async() => {
-      let isInTransaction = await distributor.isInTransaction('0x5678');
-      assert.equal(isInTransaction, false);
-
-    });
-
   });
 
   describe('test getBackOwnerToken method', async() => {
