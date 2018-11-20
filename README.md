@@ -16,27 +16,27 @@ $ rm -rf ./build && truffle compile && truffle test --network development --rese
 ```
 
 ### Deploy
-#### Prepare an ethereum keystore
+#### Prepare the ethereum keystore
 ```$json
 $ cat ./ropsten_keyfile
 {
     "crypto" : {
         "cipher" : "aes-128-ctr",
         "cipherparams" : {
-            "iv" : "83dbcc02d8ccb40e466191a123791e0e"
+            "iv" : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         },
-        "ciphertext" : "d172bf743a674da9cdad04534d56926ef8358534d458fffccd4e6ad2fbde479c",
+        "ciphertext" : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
         "kdf" : "scrypt",
         "kdfparams" : {
             "dklen" : 32,
-            "n" : 262144,
+            "n" : xxxxxx,
             "r" : 1,
             "p" : 8,
-            "salt" : "ab0c7876052600dd703518d6fc3fe8984592145b591fc8fb5c6d43190334ba19"
+            "salt" : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
         },
-        "mac" : "2103ac29920d71da29f15d75b4a16dbe95cfd7ff8faea1056c33131d846e3097"
+        "mac" : "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
     },
-    "id" : "3198bc9c-6672-5ab3-d995-4942343ae5b6",
+    "id" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "version" : 3
 }
 ```
@@ -44,6 +44,10 @@ $ cat ./ropsten_keyfile
 ```$bash
 $ export INFURA_API_KEY=YourInfuraAPIKey
 $ export ACCOUNT_PASSWORD=yourpassword
+
+# Ethereum accounts for the reserved allocation
+$ export MEMBER_ADDR=0xYourEthereumAddress
+$ export FOUNDATION_ADDR=0xYourEthereumAddress
 ```
 #### Deploy contracts
 ```bash
