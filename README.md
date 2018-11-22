@@ -6,12 +6,12 @@ DataXchain Crowdsale contracts http://dataxchain.org/
 - Install Truffle and Ganache
 
 ### Install requirements with npm:
-```
+```$bash
 npm install
 ```
 
 ### Run tests
-```bash
+```$bash
 $ rm -rf ./build && truffle compile && truffle test --network development --reset
 ```
 
@@ -48,8 +48,20 @@ $ export ACCOUNT_PASSWORD=yourpassword
 # Ethereum accounts for the reserved allocation
 $ export MEMBER_ADDR=0xYourEthereumAddress
 $ export FOUNDATION_ADDR=0xYourEthereumAddress
+
+# DB for distribution
+$ export DB_CONNECTION=mysql://user:pass@example.com:5432/dbname
 ```
 #### Deploy contracts
-```bash
+```$bash
 $ rm -rf ./build && truffle compile && truffle migrate --network ropsten --verbose
+```
+#### Setup DB
+```$bash
+$ node scripts/create_table.js
+$ node scripts/create_test_data.js
+```
+#### Distribute tokens by the distribution table
+```$bash
+$ truffle exec scripts/distribute.js
 ```
