@@ -7,8 +7,8 @@ const DistributionTable = require('./sequelize_db');
 
 module.exports = async function(callback) {
     var query_result = await DistributionTable.findAll({
-        attributes: ['hash', 'addr', 'amount', 'is_distributed'],
-        where: { is_distributed: false }
+        attributes: ['HASH', 'ADDR', 'AMOUNT', 'IS_DISTRIBUTED'],
+        where: { IS_DISTRIBUTED: false }
     });
 
     Distributor.setProvider(web3.currentProvider);
@@ -16,15 +16,19 @@ module.exports = async function(callback) {
     var owner = await distributor.owner();
     Distributor.defaults({from: owner});
 
-    query_result.forEach((row) => {
-        distributor.transferToken(row.hash, row.addr, web3.toWei(row.amount))
-            .then(tx_res => {
-                console.log("success : " + tx_res.tx);
-                DistributionTable.update(
-                    { is_distributed: true}, { where: { hash: row.hash } });
-            })
-            .catch(error => {
-                console.log("error : " + error);
-            });
-    });
+    for (const row of query_result) {
+        await console.debug(row.HASH, row.ADDR, web3.toWei(row.AMOUNT));
+        try {
+            let tx_res = await distributor.transferToken(
+                row.HASH, row.ADDR, web3.toWei(row.AMOUNT));
+            await console.log("success : " + tx_res.tx);
+            await DistributionTable.update(
+                { IS_DISTRIBUTED: true}, { where: { HASH: row.HASH } });
+
+        } catch (error) {
+            console.log("error : " + error);
+        }
+    }
+
+    return callback();
 };
