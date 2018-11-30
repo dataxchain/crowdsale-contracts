@@ -10,11 +10,6 @@ DataXchain Crowdsale contracts http://dataxchain.org/
 npm install
 ```
 
-### Run tests
-```$bash
-$ rm -rf ./build && truffle compile && truffle test --network development --reset
-```
-
 ### Deploy
 #### Prepare the ethereum keystore
 ```$json
@@ -51,6 +46,10 @@ $ export FOUNDATION_ADDR=0xYourEthereumAddress
 
 # DB for distribution
 $ export DB_CONNECTION=mysql://user:pass@example.com:5432/dbname
+```
+#### Run tests
+```$bash
+$ rm -rf ./build && truffle compile && truffle test --network development --reset
 ```
 #### Deploy contracts
 ```$bash

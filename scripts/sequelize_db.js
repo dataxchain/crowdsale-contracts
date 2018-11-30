@@ -1,16 +1,14 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DB_CONNECTION);
 
- const Distribution = sequelize.define('distribution', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+ const Distribution = sequelize.define('DISTRIBUTION', {
+    HASH: {
+        type: Sequelize.STRING,
+        primaryKey: true
     },
-    hash: Sequelize.STRING,
-    addr: Sequelize.STRING,
-    amount: Sequelize.STRING,
-    is_distributed: Sequelize.BOOLEAN
+    ADDR: Sequelize.STRING,
+    AMOUNT: Sequelize.STRING,
+    IS_DISTRIBUTED: Sequelize.BOOLEAN
 },{
     timestamps: false,
     freezeTableName: true
