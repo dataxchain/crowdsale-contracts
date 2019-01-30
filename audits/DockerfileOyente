@@ -1,0 +1,6 @@
+#FROM ethereum/solc:0.5.1 as solc
+FROM ethereum/solc:0.4.24 as solc
+
+FROM luongnguyen/oyente
+
+COPY --from=solc /usr/bin/solc /usr/bin/solc
